@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  vue:
+    build:
+      context: .
+      dockerfile: vue.Dockerfile
+    volumes:
+      - ./vue-axios:/app
+      - /app/node_modules
+    ports:
+      - "8080:8080"
+    command: npm run serve
+    container_name: vue
+    depends_on:
+     - json-server
+  json-server:
+    build:
+      context: .
+      dockerfile: json.Dockerfile
+    volumes:
+      - ./vue-axios/db:/app/db
+    ports:
+      - "3000:3000"
+    command: json-server --host 0.0.0.0 --watch db/db.json
+    container_name: json-server
+  php:
+    build:
+      context: .
+      dockerfile: php.Dockerfile
+    container_name: php
+    volumes:
+      - ./php-laravel/:/var/www/html/
+    ports:
+      - 8000:80
+  mysql:
+    container_name: mysql
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: minhasenha123
+      MYSQL_DATABASE: meubd
+      MYSQL_USER: meuuser
+      MYSQL_PASSWORD: minhasenha
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+  
+
+  
+ 
+  
