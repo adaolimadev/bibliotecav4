@@ -1,15 +1,15 @@
 <template>
   <div>
-    <TableLivro />
+    <HomePage />
   </div>
 </template>
 
 <script>
-import TableLivro from '../components/TableLivro.vue'
+import HomePage from '../components/HomePage.vue'
 export default {
   name: 'Home',
   components: {
-    TableLivro
+    HomePage
   },
   data: () => ({
   })

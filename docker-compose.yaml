@@ -12,18 +12,6 @@ services:
       - "8080:8080"
     command: npm run serve
     container_name: vue
-    depends_on:
-     - json-server
-  json-server:
-    build:
-      context: .
-      dockerfile: json.Dockerfile
-    volumes:
-      - ./vue-axios/db:/app/db
-    ports:
-      - "3000:3000"
-    command: json-server --host 0.0.0.0 --watch db/db.json
-    container_name: json-server
   php:
     build:
       context: .

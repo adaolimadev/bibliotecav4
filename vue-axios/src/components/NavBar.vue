@@ -23,9 +23,40 @@
         width="100"
     />
     </div>
+    <span class="ml-4">BIBLIOTECA v3.1</span>
 
     <v-spacer></v-spacer>
-    <strong>BIBLIOTECA v3.1</strong>
+    <router-link to="/">
+    <v-btn
+    target="_blank"
+    text
+    class="ml-2"
+    >
+    <v-icon>mdi-home-circle</v-icon>
+    <span class="mr-2">Home</span>
+    </v-btn>
+    </router-link>
+
+    <router-link to="/listlivro">
+    <v-btn
+    target="_blank"
+    text
+    >
+    <v-icon>mdi-book-open-variant</v-icon>
+    <span class="mr-2">LIVROS</span>
+    </v-btn>
+    </router-link>
+
+    <router-link to="/listcliente">
+    <v-btn
+    target="_blank"
+    text
+    >
+    <v-icon>mdi-account-outline</v-icon>
+    <span class="mr-2">CLIENTES</span>
+    </v-btn>
+    </router-link>
+
     </v-app-bar>
 </template>
 

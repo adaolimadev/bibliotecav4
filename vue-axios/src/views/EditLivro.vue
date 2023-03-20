@@ -106,7 +106,7 @@ export default {
         genero: this.genero
       }
       this.axios.post(`${this.baseUrl}livros/update/${this.idLivro}`, upLivro)
-      this.$router.push('/')
+      this.$router.push({ name: 'listlivro', params: { reload: true } })
     }
   },
   mounted () {
@@ -120,11 +120,5 @@ export default {
 </script>
 
 <style scoped>
-h1{
-  text-align: center;
-}
-#container-cad{
-    background-color: whitesmoke;
-    border-radius: 10px;
-}
+
 </style>

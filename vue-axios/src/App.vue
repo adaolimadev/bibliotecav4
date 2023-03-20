@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style>
-h1{
+h1, p{
   text-align: center;
 }
 #container-cad{

@@ -45,7 +45,7 @@
             </v-icon>
             Cadastrar
         </v-btn>
-        <router-link to="/">
+        <router-link to="/listlivro">
           <v-btn
               color="error"
           >
@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     createLivro () {
-      // Monsta um objeto livro com os dados do form
+      // Monta um objeto livro com os dados do form
       const newLivro = {
         titulo: this.titulo,
         autor: this.autor,

@@ -77,9 +77,20 @@ export default {
       this.getLivros()
     }
   },
-  mounted () {
-    this.getLivros()
-  }
+  async mounted () {
+    await this.getLivros()
 
+    this.$props.reload = this.$route.params.reload
+
+    console.log(this.$props.reload)
+
+    if (this.$props.reload === true) {
+      this.$props.reload = false
+      await this.getLivros()
+    }
+  },
+  props: [
+    'reload'
+  ]
 }
 </script>
