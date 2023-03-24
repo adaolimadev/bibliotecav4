@@ -4,7 +4,7 @@
       <v-data-table
         :headers="headers"
         :items="clientes"
-        :items-per-page="5"
+        :items-per-page="10"
         class="elevation-2"
       >
       <template v-slot:top>
@@ -21,6 +21,15 @@
               NOVO CLIENTE
             </v-btn>
         </router-link>
+        <v-btn
+              color="primary"
+              dark
+              class="mt-1 ml-2"
+              @click="CLIENTES_GET_ALL"
+          >
+            <v-icon class="mr-1">mdi-plus</v-icon>
+              teste
+            </v-btn>
         </v-toolbar>
       </template>
       <template v-slot:[`item.acao`]="{ item }">
@@ -39,6 +48,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'TableLivro',
   data () {
@@ -56,6 +66,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'CLIENTES_GET_ALL'
+    ]),
     async getClientes () {
       await this.axios.get(`${this.baseUrl}clientes`).then(
         (response) => {
@@ -77,11 +90,8 @@ export default {
 
     this.$props.reload = this.$route.params.reload
 
-    console.log(this.$props.reload)
-
     if (this.$props.reload === true) {
       this.$props.reload = false
-      // window.location.reload()
       await this.getClientes()
     }
   },

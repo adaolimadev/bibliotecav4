@@ -1,15 +1,15 @@
 <template>
     <div>
-      <TableCliente />
+      <TableCliente2 />
     </div>
   </template>
 
 <script>
-import TableCliente from '../components/TableCliente.vue'
+import TableCliente2 from '../components/TableCliente2.vue'
 export default {
   name: 'ListCliente',
   components: {
-    TableCliente
+    TableCliente2
   },
   data: () => ({
   })

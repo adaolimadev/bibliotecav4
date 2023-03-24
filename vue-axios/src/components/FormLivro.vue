@@ -1,32 +1,31 @@
 <template>
     <div id="app" class="mt-4 ml-12 mr-12">
-        <form @submit.prevent="createLivro()">
         <v-text-field
-            v-model="titulo"
+            v-model="LIVROS_GET_LIVRO.titulo"
             label="Título"
             required
         ></v-text-field>
 
         <v-text-field
-            v-model="autor"
+            v-model="LIVROS_GET_LIVRO.autor"
             label="Autor"
             required
         ></v-text-field>
 
         <v-text-field
-            v-model="editora"
+            v-model="LIVROS_GET_LIVRO.editora"
             label="Editora"
             required
         ></v-text-field>
 
         <v-text-field
-            v-model="ano"
+            v-model="LIVROS_GET_LIVRO.ano"
             label="Ano"
             required
         ></v-text-field>
 
         <v-select
-            v-model="genero"
+            v-model="LIVROS_GET_LIVRO.genero"
             :items="items"
             label="Gênero"
             required
@@ -38,11 +37,9 @@
         >
         <v-btn
             color="primary"
-            type="submit"
+            @click="LIVROS_ADD"
         >
-            <v-icon left>
-            mdi-check
-            </v-icon>
+            <v-icon left>mdi-check</v-icon>
             Cadastrar
         </v-btn>
         <router-link to="/listlivro">
@@ -56,48 +53,28 @@
           </v-btn>
         </router-link>
         </v-row>
-        </form>
     </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'FormLivro',
   data () {
     return {
-      baseUrl: 'http://localhost:8000/public/api/',
-      items: ['Ação', 'Aventura', 'Comédia', 'Drama', 'Romance', 'Suspense'],
-      titulo: '',
-      autor: '',
-      editora: '',
-      genero: '',
-      ano: ''
+      items: ['Ação', 'Aventura', 'Comédia', 'Drama', 'Romance', 'Suspense']
     }
   },
+  computed: {
+    ...mapGetters([
+      'LIVROS_GET_LIVRO'
+    ])
+  },
   methods: {
-    createLivro () {
-      // Monta um objeto livro com os dados do form
-      const newLivro = {
-        titulo: this.titulo,
-        autor: this.autor,
-        editora: this.editora,
-        ano: this.ano,
-        genero: this.genero
-      }
-
-      this.axios.post(`${this.baseUrl}livros/store`, newLivro)
-      this.limparCampos()
-    },
-    limparCampos () {
-      this.titulo = ''
-      this.autor = ''
-      this.editora = ''
-      this.ano = ''
-      this.genero = []
-    }
+    ...mapActions([
+      'LIVROS_ADD'
+    ])
   }
 }
 </script>
-
-<style scoped>
-</style>

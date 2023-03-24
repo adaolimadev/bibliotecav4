@@ -96,6 +96,7 @@ export default {
     }
   },
   mounted () {
+    // Pega o ID que foi passado pela rota junto com o botao delete
     this.idCliente = (this.$route.params.id)
     console.log(`Chegou o ID: ${this.idCliente}`)
     this.carregarCliente(this.idCliente)
