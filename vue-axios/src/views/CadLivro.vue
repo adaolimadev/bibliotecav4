@@ -1,17 +1,23 @@
 <template>
     <div>
-        <v-container class="col-md-6 mt-4" id="container-cad">
-            <h1>CADASTRAR LIVRO</h1>
             <FormLivro/>
-        </v-container>
     </div>
 </template>
 <script>
 import FormLivro from '../components/FormLivro.vue'
+import { mapMutations } from 'vuex'
 export default {
   name: 'CadLivro',
   components: {
     FormLivro
+  },
+  methods: {
+    ...mapMutations([
+      'CLEAR_LIVRO'
+    ])
+  },
+  created () {
+    this.CLEAR_LIVRO()
   }
 }
 </script>

@@ -1,17 +1,14 @@
 <template>
     <div>
-      <TableLivro />
+      <TableLivroApi />
     </div>
   </template>
-
 <script>
-import TableLivro from '../components/TableLivro.vue'
+import TableLivroApi from '../components/TableLivroApi.vue'
 export default {
   name: 'ListLivro',
   components: {
-    TableLivro
-  },
-  data: () => ({
-  })
+    TableLivroApi
+  }
 }
 </script>

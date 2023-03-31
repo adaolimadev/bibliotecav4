@@ -50,7 +50,7 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
-  name: 'TableLivro',
+  name: 'TableCliente',
   data () {
     return {
       baseUrl: 'http://localhost:8000/public/api/',

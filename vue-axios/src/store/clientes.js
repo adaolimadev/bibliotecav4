@@ -9,44 +9,50 @@ export default {
       cpf: '',
       telefone: ''
     },
-    clientes: []
+    clientes: [],
+    headers: [
+      { text: '#', value: 'id', aling: 'start', sortable: 'false' },
+      { text: 'Nome', value: 'nome', align: 'center' },
+      { text: 'Email', value: 'email', align: 'center' },
+      { text: 'CPF', value: 'cpf', align: 'center' },
+      { text: 'Telefone', value: 'telefone', align: 'center' },
+      { text: 'Editar / Excluir', value: 'acao', align: 'center' }
+    ]
   },
   getters: {
     // recupera uma cliente
-    CLIENTES_GET_CLIENTE: state => {
+    GET_CLIENTE: state => {
       return state.cliente
+    },
+    GET_CLIENTES: state => {
+      return state.clientes
+    },
+    GET_HEADERS_CLIENTES: state => {
+      return state.headers
     }
   },
   mutations: {
-    CLIENTES_SET_CLIENTE (state, data) {
-      state.cliente = data
+    SET_CLIENTE (state, payload) {
+      state.cliente = payload
+    },
+    SET_CLIENTES (state, payload) {
+      state.clientes = payload
+    },
+    CLEAR_CLIENTE: (state) => {
+      state.cliente = {
+        nome: '',
+        email: '',
+        cpf: '',
+        telefone: ''
+      }
     }
   },
   actions: {
-    // função que adiciona um cliente (recuperado/get) ao BD
-    CLIENTES_ADD ({ commit, getters }) {
-      return api.post('clientes/store', getters.CLIENTES_GET_CLIENTE).then(
-        (response) => {
-          commit('CLIENTES_SET_CLIENTE', {
-            nome: '',
-            email: '',
-            cpf: '',
-            telefone: ''
-          })
-          return true
-        }
-      ).catch(
-        (error) => {
-          console.log(error)
-        }
-      )
-    },
     // função que traz todos os clientes
-    CLIENTES_ALL () {
-      return api.get('clientes').then(
+    BD_CLIENTES_ALL ({ commit }) {
+      api.get('clientes').then(
         (response) => {
-          this.clientes = response.data
-          return this.clientes
+          commit('SET_CLIENTES', response.data)
         }
       ).catch(
         (error) => {
@@ -55,24 +61,25 @@ export default {
       )
     },
 
-    // função que deleta um cliente
-    // eslint-disable-next-line
-    async CLIENTES_DELETE ({}, id) {
-      return api.delete(`clientes/${id}`)
+    BD_CLIENTES_ADD ({ getters, commit }) {
+      api.post('clientes/store', getters.GET_CLIENTE)
+        .then(() => {
+          commit('CLEAR_CLIENTE')
+        })
     },
 
-    // rota clientes/get/{id} Não encontrava pq precisava de um desempacotamento
-    // eslint-disable-next-line
-    CLIENTES_ONE ({commit}, id) { 
-      api.get(`clientes/get/${id}`).then(
-        (response) => {
-          commit('CLIENTES_SET_CLIENTE', response.data)
-        }
-      )
+    BD_CLIENTES_DEL ({ dispatch }, id) {
+      api.delete(`clientes/${id}`)
+        .then(() => {
+          dispatch('BD_CLIENTES_ALL')
+        })
     },
-    CLIENTES_UPDATE ({ getters }) {
-      api.post(`update/${getters.CLIENTES_GET_CLIENTE.id}`, getters.CLIENTES_GET_CLIENTE)
+
+    BD_CLIENTES_SAVE ({ getters, dispatch }) {
+      api.post(`clientes/update/${getters.GET_CLIENTE.id}`, getters.GET_CLIENTE)
+        .then(() => {
+          dispatch('BD_CLIENTES_ALL')
+        })
     }
-
   }
 }

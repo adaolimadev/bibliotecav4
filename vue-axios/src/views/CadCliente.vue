@@ -1,17 +1,23 @@
 <template>
     <div>
-        <v-container class="col-md-6 mt-4" id="container-cad">
-            <h1>CADASTRAR CLIENTE</h1>
-            <FormCliente/>
-        </v-container>
+        <FormCliente/>
     </div>
 </template>
 <script>
 import FormCliente from '../components/FormCliente.vue'
+import { mapMutations } from 'vuex'
 export default {
   name: 'CadCliente',
   components: {
     FormCliente
+  },
+  methods: {
+    ...mapMutations([
+      'CLEAR_CLIENTE'
+    ])
+  },
+  created () {
+    this.CLEAR_CLIENTE()
   }
 }
 </script>

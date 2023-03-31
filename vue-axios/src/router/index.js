@@ -6,7 +6,7 @@ import EditLivro from '../views/EditLivro.vue'
 import ListLivro from '../views/ListLivro.vue'
 import ListCliente from '../views/ListCliente.vue'
 import CadCliente from '../views/CadCliente.vue'
-import EditCliente2 from '../views/EditCliente2.vue'
+import EditClienteApi from '../views/EditClienteApi.vue'
 
 Vue.use(VueRouter)
 
@@ -44,7 +44,7 @@ const routes = [
   {
     path: '/editcliente',
     name: 'editcliente',
-    component: EditCliente2
+    component: EditClienteApi
   }
 ]
 

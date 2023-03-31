@@ -8,37 +8,82 @@ export default {
       editora: '',
       genero: '',
       ano: ''
-    }
+    },
+    livros: [],
+    headers: [
+      { text: '#', value: 'id', aling: 'start', sortable: 'false' },
+      { text: 'Título', value: 'titulo', align: 'center' },
+      { text: 'Autor', value: 'autor', align: 'center' },
+      { text: 'Editora', value: 'editora', align: 'center' },
+      { text: 'Ano', value: 'ano', align: 'center' },
+      { text: 'Gênero', value: 'genero', align: 'center' },
+      { text: 'Editar / Excluir', value: 'acao', align: 'center' }
+    ],
+    generos: ['Ação', 'Aventura', 'Comédia', 'Drama', 'Romance', 'Suspense']
   },
   getters: {
-    LIVROS_GET_LIVRO: state => {
+    GET_HEADERS: state => {
+      return state.headers
+    },
+    GET_GENEROS: state => {
+      return state.generos
+    },
+    GET_LIVROS: state => {
+      return state.livros
+    },
+    GET_LIVRO: state => {
       return state.livro
     }
   },
   mutations: {
-    LIVROS_SET_LIVRO (state, data) {
-      state.livro = data
+    SET_LIVROS: (state, payload) => {
+      state.livros = payload
+    },
+    SET_LIVRO: (state, payload) => {
+      state.livro = payload
+    },
+    CLEAR_LIVRO: (state) => {
+      state.livro = {
+        titulo: '',
+        autor: '',
+        editora: '',
+        genero: '',
+        ano: ''
+      }
     }
   },
   actions: {
-    LIVROS_ADD ({ commit, getters }) {
-      return api.post('livros/store', getters.LIVROS_GET_LIVRO).then(
-        (response) => {
-          commit('LIVROS_SET_LIVRO', {
-            titulo: '',
-            autor: '',
-            editora: '',
-            genero: '',
-            ano: ''
-          })
+    // Método que busca no BD os livros e manda pra mutations setLivros, neste caso esta desempacotando o 'commit' do 'context' padrão
+    BD_LIVROS_ALL ({ commit }) {
+      api.get('livros')
+        .then((response) => {
+          commit('SET_LIVROS', response.data)
+        })
+    },
 
-          return true
-        }
-      ).catch(
-        (error) => {
-          console.log(error)
-        }
-      )
+    // Método que adiciona no BD um livro recuperado da State ('GET_LIVRO') e aciona a função CLEAR_LIVRO para limpar o state atual
+    // poderia usar context.getter e context.commit usando só context por parametros
+    BD_LIVROS_ADD ({ getters, commit }) {
+      api.post('livros/store', getters.GET_LIVRO)
+        .then((response) => {
+          commit('CLEAR_LIVRO')
+        })
+    },
+
+    // Método que remove do BD um livro recebendo o 'id' por parametro e logo após aciona o método 'BD_LIVROS_ALL' para atualizar o state de livros
+    BD_LIVROS_DEL ({ dispatch }, id) {
+      api.delete('livros/' + id)
+        .then(() => {
+          dispatch.BD_LIVROS_ALL()
+        })
+    },
+
+    // Método que salva um livro editado pegando o 'livro atual' e mandando pra api update juntamente com o ID deste livro
+    BD_LIVROS_SAVE ({ getters, dispatch }) {
+      api.post(`livros/update/${getters.GET_LIVRO.id}`, getters.GET_LIVRO)
+        .then(() => {
+          dispatch('BD_LIVROS_ALL')
+        })
     }
   }
 }
