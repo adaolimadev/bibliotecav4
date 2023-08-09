@@ -23,7 +23,10 @@
         </v-toolbar>
       </template>
       <template v-slot:[`item.acao`]="{ item }">
-        <v-btn small color="blue lighten-1" @click="editar(item)">
+        <v-btn small  class="ml-2" @click="openBarcode(item)">
+          <v-icon size="big"> mdi-barcode</v-icon>
+        </v-btn>
+        <v-btn small color="blue lighten-1 ml-2" @click="editar(item)">
           <v-icon size="big" > mdi-pencil-outline</v-icon>
         </v-btn>
         <v-btn small color="red lighten-1" class="ml-2" @click="deletar(item.id)">
@@ -38,25 +41,35 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
+  data () {
+    return {
+      dialog: false
+    }
+  },
   name: 'TableLivroApi',
   computed: {
-    ...mapGetters(['GET_HEADERS', 'GET_LIVROS'])
+    ...mapGetters(['GET_HEADERS', 'GET_LIVROS', 'GET_LIVRO'])
   },
   methods: {
     ...mapActions([
       'BD_LIVROS_ALL',
-      'BD_LIVROS_DEL'
+      'BD_LIVROS_DEL',
+      'BD_LIVROS_PRINT'
     ]),
     ...mapMutations([
-      'SET_LIVRO'
+      'SET_LIVRO',
+      'SET_SNACK'
     ]),
     deletar (id) {
       this.BD_LIVROS_DEL(id)
+      setTimeout(() => { this.$root.$emit('SNACK_OPEN') }, 500)
     },
     editar (livro) {
-      // console.log(livro)
       this.SET_LIVRO(livro)
       this.$router.push('editlivro')
+    },
+    openBarcode () {
+      // this.$router.push('Print')
     }
   },
   mounted () {
@@ -64,3 +77,6 @@ export default {
   }
 }
 </script>
+<style scoped>
+
+</style>

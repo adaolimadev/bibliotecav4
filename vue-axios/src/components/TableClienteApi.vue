@@ -48,12 +48,14 @@ export default {
   methods: {
     ...mapActions([
       'BD_CLIENTES_ALL',
-      'BD_CLIENTES_DEL'
+      'BD_CLIENTES_DEL',
+      'CLEAR_SNACK'
     ]),
     ...mapMutations([
       'SET_CLIENTE'
     ]),
     delete_ (id) {
+      this.CLEAR_SNACK()
       this.BD_CLIENTES_DEL(id)
     },
     editar (cliente) {

@@ -1,7 +1,12 @@
 <template>
     <div>
-        <Alert objeto="Livro" acao="cadastrado" tipo="success"/>
-        <v-container class="col-md-6" id="container-cad">
+        <v-container class="col-md-6 mt-4" id="container-cad">
+          <template v-if="GET_LIVRO.id">
+            <h1>EDITAR LIVRO</h1>
+          </template>
+          <template v-else>
+            <h1>CADASTRAR LIVRO</h1>
+          </template>
             <div id="app" class="mt-4 mr-8 ml-8">
                 <v-text-field
                 v-model="GET_LIVRO.titulo"
@@ -73,14 +78,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import Alert from '../components/AlertComponent.vue'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'FormLivro',
-  components: {
-    Alert
-  },
   computed: {
     ...mapGetters([
       'GET_LIVRO',
@@ -92,14 +93,14 @@ export default {
       'BD_LIVROS_ADD',
       'BD_LIVROS_SAVE'
     ]),
+    ...mapMutations(['SET_SNACK']),
     cadastrar () {
       this.BD_LIVROS_ADD()
-      this.$root.$emit('ALERT_OPEN')
+      this.$root.$emit('SNACK_OPEN')
     },
     editar () {
-      console.log(this.GET_LIVRO)
       this.BD_LIVROS_SAVE()
-      // this.$root.$emit('ALERT_OPEN')
+      this.$root.$emit('SNACK_OPEN')
       this.$router.push('listlivro')
     },
     voltar () {

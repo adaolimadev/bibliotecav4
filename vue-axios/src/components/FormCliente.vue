@@ -81,14 +81,27 @@ export default {
   },
   methods: {
     ...mapActions([
-      'BD_CLIENTES_ADD'
+      'BD_CLIENTES_ADD',
+      'BD_CLIENTES_SAVE',
+      'CLEAR_SNACK'
     ]),
     voltar () {
       this.$router.push('listcliente')
     },
     cadastrar () {
-      this.BD_CLIENTES_ADD()
-      this.$root.$emit('SNACK_OPEN')
+      this.CLEAR_SNACK()
+
+      if (!this.GET_CLIENTE.nome || !this.GET_CLIENTE.email || !this.GET_CLIENTE.cpf || !this.GET_CLIENTE.telefone) {
+        this.$store.commit('SET_SNACK', { text: 'Atenção! Preencha todo os campos antes de enviar o cadastro!', color: 'error' })
+        this.$store.commit('SET_OPEN', true)
+      } else {
+        this.BD_CLIENTES_ADD()
+      }
+    },
+    editar () {
+      this.CLEAR_SNACK()
+      this.BD_CLIENTES_SAVE()
+      this.$router.push('listcliente')
     }
   }
 }

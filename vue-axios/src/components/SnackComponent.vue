@@ -2,18 +2,18 @@
     <div class="text-center ma-2">
       <v-snackbar
         top
-        v-model="snackbar"
+        v-model="GET_SNACK.ativar"
         timeout="3000"
-        :color="GET_SNACK.color"
+        :color=GET_SNACK.cor
       >
-      <v-icon color="success" class="mr-1">mdi-check-circle</v-icon>
+      <v-icon class="mr-1">mdi-check-circle</v-icon>
         <span>{{ GET_SNACK.texto }}</span>
         <template v-slot:action="{ attrs }">
           <v-btn
-            color="dark"
+            color="white"
             text
             v-bind="attrs"
-            @click="snackbar = false"
+            @click="fechar()"
           >
           fechar
           </v-btn>
@@ -25,26 +25,26 @@
 import { mapMutations, mapGetters } from 'vuex'
 export default {
   name: 'SnackComponent',
-  data: () => ({
-    snackbar: false
-  }),
+  data: () => ({}),
   computed: {
     ...mapGetters([
       'GET_SNACK'
     ])
   },
+  watch: {
+
+  },
   actions: {
     ...mapMutations([
-      'SET_SNACK'
+      'SET_SNACK',
+      'SET_OPEN'
     ])
   },
-  created () {
-    this.$root.$on('SNACK_OPEN', () => {
-      this.snackbar = !this.snackbar
-    })
-  },
-  beforeCreated () {
-    this.$root.$off('SNACK_OPEN')
+  methods: {
+    fechar () {
+      // this.SET_OPEN(false)
+      this.$store.commit('SET_OPEN', false)
+    }
   }
 }
 </script>

@@ -9,7 +9,6 @@ export default {
   name: 'EditCliente',
   components: {
     FormCliente
-  },
-  methods: {}
+  }
 }
 </script>

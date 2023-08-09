@@ -57,6 +57,16 @@
     </v-btn>
     </router-link>
 
+    <router-link to="/upload">
+    <v-btn
+    target="_blank"
+    text
+    >
+    <v-icon>mdi-cloud-upload-outline</v-icon>
+    <span class="mr-2">DOCUMENTOS</span>
+    </v-btn>
+    </router-link>
+
     </v-app-bar>
 </template>
 

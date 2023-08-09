@@ -62,23 +62,29 @@ export default {
     },
 
     BD_CLIENTES_ADD ({ getters, commit }) {
+      commit('SET_SNACK', { text: 'Cliente Cadastrado com sucesso!', color: 'success' })
       api.post('clientes/store', getters.GET_CLIENTE)
         .then(() => {
+          commit('SET_OPEN', true)
           commit('CLEAR_CLIENTE')
         })
     },
 
-    BD_CLIENTES_DEL ({ dispatch }, id) {
+    BD_CLIENTES_DEL ({ dispatch, commit }, id) {
+      commit('SET_SNACK', { text: 'Cliente Excluído com sucesso!', color: 'error' })
       api.delete(`clientes/${id}`)
         .then(() => {
           dispatch('BD_CLIENTES_ALL')
+          commit('SET_OPEN', true)
         })
     },
 
-    BD_CLIENTES_SAVE ({ getters, dispatch }) {
+    BD_CLIENTES_SAVE ({ getters, dispatch, commit }) {
+      commit('SET_SNACK', { text: 'Cliente Editado com sucesso!', color: 'blue' })
       api.post(`clientes/update/${getters.GET_CLIENTE.id}`, getters.GET_CLIENTE)
         .then(() => {
           dispatch('BD_CLIENTES_ALL')
+          commit('SET_OPEN', true)
         })
     }
   }

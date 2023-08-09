@@ -67,22 +67,34 @@ export default {
       api.post('livros/store', getters.GET_LIVRO)
         .then((response) => {
           commit('CLEAR_LIVRO')
+          commit('SET_SNACK', { text: 'Livro Cadastrado com sucesso!', color: 'success' })
         })
     },
 
     // Método que remove do BD um livro recebendo o 'id' por parametro e logo após aciona o método 'BD_LIVROS_ALL' para atualizar o state de livros
-    BD_LIVROS_DEL ({ dispatch }, id) {
+    BD_LIVROS_DEL ({ dispatch, commit }, id) {
       api.delete('livros/' + id)
         .then(() => {
-          dispatch.BD_LIVROS_ALL()
+          dispatch('BD_LIVROS_ALL')
+          commit('SET_SNACK', { text: 'Livro Excluído com sucesso!', color: 'error' })
         })
     },
 
     // Método que salva um livro editado pegando o 'livro atual' e mandando pra api update juntamente com o ID deste livro
-    BD_LIVROS_SAVE ({ getters, dispatch }) {
-      api.post(`livros/update/${getters.GET_LIVRO.id}`, getters.GET_LIVRO)
+    async BD_LIVROS_SAVE ({ getters, dispatch, commit }) {
+      await api.post(`livros/update/${getters.GET_LIVRO.id}`, getters.GET_LIVRO)
         .then(() => {
           dispatch('BD_LIVROS_ALL')
+          commit('SET_SNACK', { text: 'Livro Editado com sucesso!', color: 'blue' })
+        })
+    },
+
+    async BD_LIVROS_PRINT ({ dispatch, commit }, id) {
+      await api.post('livros/print/' + id)
+        .then(() => {
+          dispatch('BD_LIVROS_ALL')
+          commit('SET_SNACK', { text: 'Livro Impresso com sucesso!', color: 'success' })
+          console.log('passo aqui!')
         })
     }
   }
