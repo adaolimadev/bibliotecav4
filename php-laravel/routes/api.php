@@ -32,6 +32,7 @@ Route::post('clientes/update/{id}', [ClienteApiController::class, 'update']);
 Route::delete('/clientes/{id}', [ClienteApiController::class, 'destroy']);
 
 Route::get('/documents', [DocumentController::class, 'index'])->name('document');
-Route::post('/documents/upload', [DocumentController::class, 'update'])->name('document.update');
+Route::post('/documents/update', [DocumentController::class, 'update'])->name('document.update');
+Route::post('/documents/upload', [DocumentController::class, 'upload'])->name('document.upload');
 Route::get('/documents/download/{documentId}', [DocumentController::class, 'download'])->name('document.download');
 Route::get('/documents/delete/{documentId}', [DocumentController::class, 'destroy'])->name('document.destroy');

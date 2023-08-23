@@ -23,14 +23,18 @@ services:
       - 8000:80
   mysql:
     container_name: mysql
+    command: --default-authentication-plugin=mysql_native_password
     image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: minhasenha123
       MYSQL_DATABASE: meubd
       MYSQL_USER: meuuser
       MYSQL_PASSWORD: minhasenha
+      MYSQL_ROOT_HOST: "%"
     volumes:
       - ./mysql/data:/var/lib/mysql
+    ports: 
+      - "3307:3306"
   
 
   

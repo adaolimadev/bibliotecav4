@@ -9,9 +9,15 @@ class Document extends Model
 {
     use HasFactory;
 
+    protected $table = "docsPessoa";
+    public $timestamps = false;
+
     protected $fillable = [
-        'name',
-        'file',
-        'mime'
+        'data',
+        'usercadastrou',
+        'obs',
+        'ispdf',
+        'codpessoa',
+        'image'
     ];
 }

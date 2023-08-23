@@ -26,7 +26,7 @@
     <span class="ml-4">BIBLIOTECA v3.1</span>
 
     <v-spacer></v-spacer>
-    <router-link to="/">
+    <router-link to="/home">
     <v-btn
     target="_blank"
     text

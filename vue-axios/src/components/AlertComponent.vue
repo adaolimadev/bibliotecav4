@@ -1,5 +1,5 @@
 <template>
-    <v-container class="col-md-6 mt-2 text-center">
+    <v-container class="mt-2 text-center">
             <v-alert
                 v-show="alerta"
                 dense

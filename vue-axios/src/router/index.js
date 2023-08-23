@@ -7,8 +7,10 @@ import ListLivro from '../views/ListLivro.vue'
 import ListCliente from '../views/ListCliente.vue'
 import CadCliente from '../views/CadCliente.vue'
 import EditClienteApi from '../views/EditClienteApi.vue'
-import PrintEtiqueta from '../views/PrintEtiqueta.vue'
+import PrintEtiquetaBalflex from '../views/PrintEtiquetaBalflex.vue'
+import PrintEtiquetaFragil from '../views/PrintEtiquetaFragil.vue'
 import UploadFile from '../views/UploadPdf.vue'
+import HomeView from '../views/HomeView.vue'
 
 Vue.use(VueRouter)
 
@@ -20,6 +22,11 @@ const router = new VueRouter({
       name: Main,
       component: Main,
       children: [
+        {
+          path: '/home',
+          name: 'home',
+          component: HomeView
+        },
         {
           path: '/listlivro',
           name: 'listlivro',
@@ -58,9 +65,14 @@ const router = new VueRouter({
       ]
     },
     {
-      path: '/print',
-      name: 'Print',
-      component: PrintEtiqueta
+      path: '/print-balflex',
+      name: 'print-balflex',
+      component: PrintEtiquetaBalflex
+    },
+    {
+      path: '/print-fragil',
+      name: 'print-fragil',
+      component: PrintEtiquetaFragil
     }
   ]
 })

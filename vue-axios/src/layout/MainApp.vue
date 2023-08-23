@@ -1,11 +1,11 @@
 <template>
-    <v-app dark>
+    <v-app>
       <NavBar />
-      <v-main id="main">
-        <router-view/>
+      <v-main app id="main">
+            <router-view />
       </v-main>
-      <FooTer/>
-      <Snack/>
+      <FooTer />
+      <Snack />
     </v-app>
   </template>
 <script>
@@ -14,7 +14,7 @@ import FooTer from '@/components/FooTer.vue'
 import Snack from '@/components/SnackComponent'
 
 export default {
-  name: 'App',
+  name: 'MainApp',
   components: {
     NavBar,
     FooTer,
@@ -22,13 +22,3 @@ export default {
   }
 }
 </script>
-
-<style>
-h1, p{
-  text-align: center;
-}
-#container-cad{
-    background-color: whitesmoke;
-    border-radius: 10px;
-}
-</style>

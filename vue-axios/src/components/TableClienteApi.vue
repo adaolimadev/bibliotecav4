@@ -1,5 +1,4 @@
 <template>
-   <v-container class="col-md-10 mt-4" id="container-cad">
     <div>
         <v-data-table
         :headers="GET_HEADERS_CLIENTES"
@@ -32,7 +31,6 @@
         </template>
       </v-data-table>
     </div>
-  </v-container>
 </template>
 
 <script>

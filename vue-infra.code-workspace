@@ -1,8 +1,23 @@
 {
 	"folders": [
 		{
-			"path": "../../.."
+			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"editor.codeActionsOnSave": {
+		  "source.fixAll.eslint": true
+		},
+		"eslint.validate": [
+		  "javascript",
+		  "javascriptreact",
+		  "html",
+		  "vue",
+		],
+		"vetur.format.defaultFormatter.js": "none",
+		"[vue]": {
+			"editor.defaultFormatter": "octref.vetur"
+		},
+		"vetur.format.defaultFormatter.ts": "vscode-typescript",    
+	  }
 }

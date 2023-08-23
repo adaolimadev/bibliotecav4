@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Document;
+use Exception;
 
 class DocumentController extends Controller
 {
@@ -26,13 +27,6 @@ class DocumentController extends Controller
 
     public function update(Request $request)
     {
-        // return $request->all();
-        $request->validate([
-            'file' => 'mimes:jpeg,bmp,png,pdf,jpg',
-            'name' => 'required|max:255',
-        ]);
-
-        if ($request->hasFile('file')) {           
             $path = $request->file('file')->getRealPath();
             $ext = $request->file->extension();
             $doc = file_get_contents($path);
@@ -44,8 +38,40 @@ class DocumentController extends Controller
                 'mime'=> $mime,
             ]);
             return true;
-        }
     }
+    public function upload (Request $request)
+    {
+        try {
+
+
+            if($request->hasFile('files')) {
+
+                $arquivos = $request->file('files');
+
+                foreach ($arquivos as $a ) {
+
+                     $path = $a->getRealPath();
+                     $doc = file_get_contents($path);
+
+                    // dd($doc);
+                    Document::create([
+                        'data' => '2023-08-22',
+                        'usercadastrou' => 'Adão',
+                        'obs' => 'Teste',
+                        'ispdf' => 1,
+                        'codpessoa' => 777,
+                        'image' => $doc,
+                    ]);
+                }
+            return true;
+            }
+            
+        } catch (\Throwable $e) {
+            throw new Exception('Erro ao processar upload dos arquivos: ' . $e->getMessage());
+        }
+
+    }
+
     public function download($id)
     {
         $document = Document::find($id);
