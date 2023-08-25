@@ -11,6 +11,7 @@ import PrintEtiquetaBalflex from '../views/PrintEtiquetaBalflex.vue'
 import PrintEtiquetaFragil from '../views/PrintEtiquetaFragil.vue'
 import UploadFile from '../views/UploadPdf.vue'
 import HomeView from '../views/HomeView.vue'
+import SendMail from '../views/SendMail.vue'
 
 Vue.use(VueRouter)
 
@@ -61,6 +62,11 @@ const router = new VueRouter({
           path: '/upload',
           name: 'upload',
           component: UploadFile
+        },
+        {
+          path: '/mail',
+          name: 'mail',
+          component: SendMail
         }
       ]
     },

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Exception;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class DocumentController extends Controller
 {
@@ -43,7 +45,6 @@ class DocumentController extends Controller
     {
         try {
 
-
             if($request->hasFile('files')) {
 
                 $arquivos = $request->file('files');
@@ -53,11 +54,10 @@ class DocumentController extends Controller
                      $path = $a->getRealPath();
                      $doc = file_get_contents($path);
 
-                    // dd($doc);
                     Document::create([
-                        'data' => '2023-08-22',
+                        'data' => date('Y-m-d H:i:s'),
                         'usercadastrou' => 'Adão',
-                        'obs' => 'Teste',
+                        'obs' =>  $a->getClientOriginalName(),
                         'ispdf' => 1,
                         'codpessoa' => 777,
                         'image' => $doc,
@@ -81,6 +81,54 @@ class DocumentController extends Controller
         return response($file_contents);
 
                          
+    }
+
+    public function mail (Request $request)
+    {
+        try {
+
+            //recebe os dados do front e atribui a variaveis locais
+            $fromAddress = $request->reply;
+            $subject = $request->subject;
+            $to = $request->to;
+            $message = $request->input('message');
+            
+            //cria uma lista para receber os anexos do front
+            $files = $request->file('files');
+            //$files = $request->files;
+            $list_arquivos = [];
+
+            foreach ($files as $file) {
+                $path = $file->getRealPath();
+                $doc = file_get_contents($path);
+                $name = $file->getClientOriginalName();
+
+                $list_arquivos[] = [
+                    'doc'       => $doc,
+                    'name'      => $name,
+                    'mime'      => 'application/pdf'
+                ];
+
+            }
+            
+        Mail::to($to)
+            ->send(new SendMail([
+                    'from'      => [
+                        'address'   => $fromAddress,
+                        'name'      => 'Adao'
+                    ],
+                    'borba'     => nl2br($message),
+                    'subject'   => $subject,
+                    'files'    => $list_arquivos,
+                    ])
+                );
+                
+            return [
+                'success' => true
+            ];
+        } catch (Exception $e) {
+            return  $e->getMessage();
+        }
     }
 }
 

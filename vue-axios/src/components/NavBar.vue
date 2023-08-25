@@ -23,7 +23,7 @@
         width="100"
     />
     </div>
-    <span class="ml-4">BIBLIOTECA v3.1</span>
+    <span class="ml-4">BIBLIOTECA v4</span>
 
     <v-spacer></v-spacer>
     <router-link to="/home">
@@ -64,6 +64,16 @@
     >
     <v-icon>mdi-cloud-upload-outline</v-icon>
     <span class="mr-2">DOCUMENTOS</span>
+    </v-btn>
+    </router-link>
+
+    <router-link to="/mail">
+    <v-btn
+    target="_blank"
+    text
+    >
+    <v-icon>mdi-mail</v-icon>
+    <span class="mr-2">E-MAIL</span>
     </v-btn>
     </router-link>
 
